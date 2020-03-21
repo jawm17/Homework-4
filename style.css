@@ -1,0 +1,16 @@
+.timeBox {
+    text-align: right;
+    padding: 25px;
+    margin-right: 10px;
+}
+h1 {
+    margin-bottom: 20px;
+}
+.content {
+    text-align: center;
+    margin-left: 30%;
+    margin-right: 30%;
+}
+#start {
+    margin-top: 10px;
+}
