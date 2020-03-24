@@ -33,6 +33,7 @@ function startTimer() {
 }
 
 function createQuestion() {
+    document.querySelector(".card").classList.remove("wrongShake");
     contentBox.innerHTML = "";
     selected = false;
 
@@ -41,42 +42,16 @@ function createQuestion() {
     question.textContent = questions[numQuestion][0];
     contentBox.appendChild(question);
 
-    var button = document.createElement("button");
-    button.className = "btn btn-warning btn-sm answer 1";
-    button.textContent = questions[numQuestion][1]
-    contentBox.appendChild(button);
-    button.addEventListener("click", function(){
-        answerSelected(1);
-        selected = true;
-      });
-
-    var button2 = document.createElement("button");
-    button2.className = "btn btn-warning btn-sm answer 2";
-    button2.textContent = questions[numQuestion][2];
-    contentBox.appendChild(button2);
-    button2.addEventListener("click", function(){
-        answerSelected(2);
-        selected = true;
-      });
-
-    var button3 = document.createElement("button");
-    button3.className = "btn btn-warning btn-sm answer 3";
-    button3.textContent = questions[numQuestion][3];
-    contentBox.appendChild(button3);
-    button3.addEventListener("click", function(){
-        answerSelected(3);
-        selected = true;
-      });
-
-    var button4 = document.createElement("button");
-    button4.className = "btn btn-warning btn-sm answer 4";
-    button4.textContent = questions[numQuestion][4];
-    contentBox.appendChild(button4);
-    button4.addEventListener("click", function(){
-        answerSelected(4);
-        selected = true;
-      });
-
+    for (var i=1; i<5; i++){
+        var button = document.createElement("button");
+        button.className = "btn btn-warning btn-sm answer "+ i;
+        button.textContent = questions[numQuestion][i]
+        contentBox.appendChild(button);
+        button.addEventListener("click", function(){
+            answerSelected(event.target.classList[event.target.classList.length-1]);
+            selected = true;
+          });
+    }
 }
 
 function recordScore() {
@@ -117,6 +92,7 @@ function displayResult(ans){
         text = "Correct!";
     }
     else {
+        document.querySelector(".card").classList.add("wrongShake");
         text = "Wrong!"
         score+= -20;
     }
