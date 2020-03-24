@@ -2,22 +2,129 @@
     text-align: right;
     padding: 25px;
     margin-right: 10px;
+    color: white;
 }
 h1 {
     margin-bottom: 20px;
 }
 .content {
-    text-align: center;
-    margin-left: 30%;
-    margin-right: 30%;
+    text-align: left;
+    width: 470px;
 }
 #start {
     /* margin-top: 10px; */
 }
 .answer {
     margin-bottom: 7px;
-    margin-right: 100%;
+    margin-right: 50%;
 }
 .question {
     margin-bottom: 20px;
+}
+@keyframes animate {
+    0%{
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+    100%{
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+}
+
+.background {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    background: #ffc400;
+    overflow: hidden;
+}
+.background li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    animation: animate 19s linear infinite;
+}
+
+
+
+
+.background li:nth-child(0) {
+    left: 49%;
+    width: 296px;
+    height: 296px;
+    bottom: -296px;
+    animation-delay: 1s;
+}
+.background li:nth-child(1) {
+    left: 44%;
+    width: 309px;
+    height: 309px;
+    bottom: -309px;
+    animation-delay: 3s;
+}
+.background li:nth-child(2) {
+    left: 59%;
+    width: 293px;
+    height: 293px;
+    bottom: -293px;
+    animation-delay: 1s;
+}
+.background li:nth-child(3) {
+    left: 64%;
+    width: 220px;
+    height: 220px;
+    bottom: -220px;
+    animation-delay: 4s;
+}
+.background li:nth-child(4) {
+    left: 58%;
+    width: 328px;
+    height: 328px;
+    bottom: -328px;
+    animation-delay: 6s;
+}
+.background li:nth-child(5) {
+    left: 1%;
+    width: 276px;
+    height: 276px;
+    bottom: -276px;
+    animation-delay: 5s;
+}
+.background li:nth-child(6) {
+    left: 42%;
+    width: 289px;
+    height: 289px;
+    bottom: -289px;
+    animation-delay: 3s;
+}
+.background li:nth-child(7) {
+    left: 63%;
+    width: 311px;
+    height: 311px;
+    bottom: -311px;
+    animation-delay: 15s;
+}
+.background li:nth-child(8) {
+    left: 79%;
+    width: 255px;
+    height: 255px;
+    bottom: -255px;
+    animation-delay: 5s;
+}
+.background li:nth-child(9) {
+    left: 72%;
+    width: 222px;
+    height: 222px;
+    bottom: -222px;
+    animation-delay: 7s;
 }
