@@ -1,15 +1,16 @@
-var set1 = ["Commonly used data types DO NOT include: ","1. Strings","2. Booleans","3. Alerts","4. Numbers", "3"];
-var set2 = ["The condition in an if/else statement is enclosed within _____.", "1. quotes","2. curly brackets","3. parentheses","4. square brackets", "3"];
-var set3 = ["Arrays in JavaSript can be used to store _____.","1. numbers and strings","2. other arrays","3. booleans","4. all of the above", "4"];
-var set4 = ["String values must be enclosed within _____ when being assigned to variables.","1. commas","2. curly brackets","3. quotes","4. parentheses", "3"];
-var set5 = ["A very useful tool used for printing content to the debugger is:","1. JavaScript","2. terminal/bash","3. for loops","4. console.log", "4"];
+var set1 = ["If Logx (1 / 8) = - 3 / 2, then x is equal to ____.","10","-4","4","1/4", "3"];
+var set2 = ["Simplify: (4 – 5) – (13 – 18 + 2).", "1","2","-1","-2", "2"];
+var set3 = ["Factor: 5x2 – 15x – 20.","5(x-4)(x+1)","-2(x-4)(x+5)","-5(x+4)(x-1)","5(x+4)(x+1)", "1"];
+var set4 = ["Rice weighing 3.75 pounds was divided equally and placed in 4 containers. How many ounces of rice were in each?","9 ounces","24 ounces","18 ounces","15 ounces", "4"];
+var set5 = ["What is the radius of a circle that has a circumference of 3.14 meters?","4 meters","0.5 meters","3.14 meters","0.25 meters", "2"];
 var questions = [set1,set2,set3,set4,set5];
 var startButton = document.querySelector("#start");
+var scoresButton = document.querySelector("#scores");
 var timeLeft = document.querySelector("#time");
 var contentBox = document.querySelector(".card-body");
 var scoreArea = document.querySelector(".scoreArea");
 
-var totalSeconds = 35;
+var totalSeconds = 60;
 var numQuestion = 0;
 var selected = false;
 var score = 0;
@@ -69,27 +70,31 @@ function scoreScreen() {
 
     var dispScore = document.createElement("div");
     dispScore.textContent = "Your final score is: " + totalSeconds;
+    dispScore.style.marginBottom = "22px";
     contentBox.appendChild(dispScore);
 
-    var inputText = document.createElement("div");
-    inputText.textContent = "Enter initials ";
-    contentBox.appendChild(inputText);
-
-    var inputInitials = document.createElement("input");
-    inputInitials.className = "input";
+    var inputInitials = document.createElement("div");
+    inputInitials.innerHTML = '<div class="input-group mb-3"><input type="text" class="form-control playerInfo" placeholder="Enter Name" aria-describedby="button-addon2"><div class="input-group-append"><button class="btn btn-outline-secondary submit" type="button" id="button-addon2">Submit</button></div></div>';
     contentBox.appendChild(inputInitials);
 
-    var inButton = document.createElement("button");
-    inButton.className = "btn btn-primary btn-sm";
-    inButton.textContent = "submit"
-        contentBox.appendChild(inButton);
-        inButton.addEventListener("click", function(){
-            var initials = inputInitials.value.trim();
-            scoreText = initials+"-"+totalSeconds;
-            localStorage.setItem("score",scoreText);
-            window.location.href = "index2.html";
-            
-          });
+    var inButton = document.querySelector(".submit");
+    var input = document.querySelector(".playerInfo");
+
+    inButton.addEventListener("click", function () {
+        var initials = input.value.trim();
+        scoreText = initials + ": " + totalSeconds;
+        var scoreList = [];
+        if (localStorage.getItem("scores") == null) {
+            scoreList = [scoreText];
+        }
+        else {
+            scoreList = JSON.parse(localStorage.getItem("scores"));
+            scoreList.push(scoreText);
+        }
+        localStorage.setItem("scores", JSON.stringify(scoreList));
+        window.location.href = "index2.html";
+
+    });
 }
 
 function answerSelected(ans) {
@@ -136,7 +141,9 @@ function answerSelected(ans) {
         totalSeconds+= -5;
     }
     }
-    console.log(score);
 }
 
 startButton.addEventListener("click", startGame);
+scoresButton.addEventListener("click", function(){
+    window.location.href = "index2.html";
+});

@@ -8,10 +8,11 @@ html,body
 }
 
 .timeBox {
-    text-align: left;
+    position: relative; 
+    left: 200px; 
+    text-align: center;
     margin-top: 20px;
     margin-bottom: 15px;
-    margin-left: 65%;
     color: black;
 }
 h1 {
@@ -30,10 +31,12 @@ h1 {
 }
 #start {
     /* margin-top: 10px; */
+    margin-right: 10px;
 }
 .answer {
     margin-bottom: 7px;
     margin-right: 50%;
+    min-width: 100px;
 }
 .question {
     margin-bottom: 20px;
