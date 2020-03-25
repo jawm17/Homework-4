@@ -6,12 +6,14 @@ var set5 = ["A very useful tool used for printing content to the debugger is:","
 var questions = [set1,set2,set3,set4,set5];
 var startButton = document.querySelector("#start");
 var timeLeft = document.querySelector("#time");
-var contentBox = document.querySelector(".card-body")
+var contentBox = document.querySelector(".card-body");
+var scoreArea = document.querySelector(".scoreArea");
 
 var totalSeconds = 35;
 var numQuestion = 0;
 var selected = false;
-var score = 100;
+var score = 0;
+var gameOver = false;
 
 function startGame() {
     event.preventDefault();
@@ -23,17 +25,22 @@ function startGame() {
 function startTimer() {
     timeLeft.textContent = totalSeconds;
     var timerInterval = setInterval(function() {
+        if (!gameOver){
         totalSeconds--;
         timeLeft.textContent = totalSeconds;
-        if(totalSeconds === 0) {
+        if(totalSeconds <= 0) {
            clearInterval(timerInterval);
+           scoreScreen();
 
         }
+    }
+    else{
+        clearInterval(timerInterval);
+    }
       }, 1000);
 }
 
 function createQuestion() {
-    document.querySelector(".card").classList.remove("wrongShake");
     contentBox.innerHTML = "";
     selected = false;
 
@@ -54,57 +61,82 @@ function createQuestion() {
     }
 }
 
-function recordScore() {
+function scoreScreen() {
     contentBox.innerHTML = "";
     var header = document.createElement("h2");
-    header.textContent = "All done!";
+    header.textContent = "All Done!";
     contentBox.appendChild(header);
 
-    var dispScore = document.createElement("p1");
-    dispScore.textContent = "Your Score: " + score;
+    var dispScore = document.createElement("div");
+    dispScore.textContent = "Your final score is: " + totalSeconds;
     contentBox.appendChild(dispScore);
+
+    var inputText = document.createElement("div");
+    inputText.textContent = "Enter initials ";
+    contentBox.appendChild(inputText);
+
+    var inputInitials = document.createElement("input");
+    inputInitials.className = "input";
+    contentBox.appendChild(inputInitials);
+
+    var inButton = document.createElement("button");
+    inButton.className = "btn btn-primary btn-sm";
+    inButton.textContent = "submit"
+        contentBox.appendChild(inButton);
+        inButton.addEventListener("click", function(){
+            var initials = inputInitials.value.trim();
+            scoreText = initials+"-"+totalSeconds;
+            localStorage.setItem("score",scoreText);
+            window.location.href = "index2.html";
+            
+          });
 }
 
 function answerSelected(ans) {
-    if (numQuestion < 4 && !selected){
-        selected = false;
-        displayResult(ans);
-        var timerInterval = setInterval(function() {
-                clearInterval(timerInterval);
-                numQuestion++;
-                createQuestion();
-          }, 1500);
-    }
-    else if (!selected){
-        selected = false;
-        displayResult(ans);
-        var timerInterval = setInterval(function() {
-            clearInterval(timerInterval);
-            recordScore();
-      }, 1500);
-    }
-}
-
-function displayResult(ans){
     var text = "";
-    console.log(ans);
-    if (ans == questions[numQuestion][5]){
-        text = "Correct!";
-    }
-    else {
-        document.querySelector(".card").classList.add("wrongShake");
-        text = "Wrong!"
-        score+= -20;
-    }
-    console.log(score);
-
+    if(!selected){
     var divider = document.createElement("p1");
     divider.innerHTML = "<hr/>";
     contentBox.appendChild(divider);
 
     var info = document.createElement("p1");
-    info.textContent = text; //+ ans;
-    contentBox.appendChild(info);
+    if (ans == questions[numQuestion][5]){
+        text = "Correct!";
+        info.textContent = text; //+ ans;
+        contentBox.appendChild(info);
+        var timerInterval = setInterval(function() {
+            clearInterval(timerInterval);
+            if (totalSeconds>0){
+            if (numQuestion > 3){
+                scoreScreen();
+                gameOver = true;
+            }
+            else {
+                numQuestion++;
+                createQuestion();
+            }
+        }
+      }, 1000);
+      score+=20;
+    }
+    else {
+        text = "Wrong!"
+        document.querySelector(".card").classList.add("wrongShake");
+        info.textContent = text; //+ ans;
+        contentBox.appendChild(info);
+        var timerInterval = setInterval(function(){
+            clearInterval(timerInterval);
+            if (totalSeconds>0){
+            document.querySelector(".card").classList.remove("wrongShake");
+            contentBox.removeChild(divider);
+            contentBox.removeChild(info);
+            selected = false;
+            }
+        }, 850);
+        totalSeconds+= -5;
+    }
+    }
+    console.log(score);
 }
 
 startButton.addEventListener("click", startGame);
