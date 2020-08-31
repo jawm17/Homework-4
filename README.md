@@ -2,7 +2,7 @@
 
 Extremely Difficult!!!
 
-Working link: [I'm an inline-style link](jawm17.github.io/math-quiz/)
+Working link: [jawm17.github.io/math-quiz/](jawm17.github.io/math-quiz/)
 
 ## User Story
 
